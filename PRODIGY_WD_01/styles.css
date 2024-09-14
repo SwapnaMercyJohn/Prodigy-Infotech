@@ -1,0 +1,148 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: Arial, sans-serif;
+}
+
+header, footer {
+    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black to blend with the background image */
+    color: #fff;
+    text-align: center;
+    padding: 1rem 0;
+    position: absolute; /* Make the header overlay on the background */
+    width: 100%;
+    top: 0;
+    z-index: 10;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+}
+
+.nav-links li {
+    margin-left: 1.5rem;
+}
+
+.nav-links a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.nav-links a:hover {
+    background-color: #007BFF; /* Change to your desired hover color */
+    color: #fff;
+    border-radius: 5px;
+}
+
+.auth-buttons a {
+    color: #fff;
+    text-decoration: none;
+    margin-left: 1rem;
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+}
+
+.auth-buttons a.sign-up {
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.burger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.burger div {
+    width: 25px;
+    height: 3px;
+    background-color: #fff;
+    margin: 4px;
+}
+
+.section {
+    min-height: 100vh; /* Full page section */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    box-sizing: border-box;
+    color: #fff;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+}
+
+.section.home {
+    background-image: url('home.jpg'); /* Replace with your background image for Home */
+}
+.section.contact {
+background-image: url('contact.jpg');
+}
+.section.about {
+    background-image: url('about.jpg'); /* Replace with your background image for About Us */
+}
+
+.section.services {
+    background-image: url('services.jpg'); /* Replace with your background image for Services */
+}
+
+.content {
+    text-align: center;
+    max-width: 800px;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background for readability */
+    border-radius: 10px;
+}
+
+footer {
+    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent to blend with background */
+    color: #fff;
+    text-align: center;
+    padding: 1rem 0;
+    position: relative;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+    }
+
+    .burger {
+        display: flex;
+    }
+
+    .nav-links.active {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 80px;
+        left: 0;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.9); /* Adjusted for mobile */
+    }
+
+    .nav-links li {
+        margin: 1rem 0;
+        text-align: center;
+    }
+
+    .content {
+        padding: 10px;
+    }
+}
+
