@@ -1,0 +1,94 @@
+
+body {
+  font-family: 'Poppins', sans-serif; /* Use custom Google font */
+  text-align: center;
+  background: url('img.jpg') no-repeat center center fixed;
+  background-size: cover;
+  color: #fff;
+  min-height: 100vh;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5); 
+}
+
+/* Style the game title */
+h1 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+  letter-spacing: 3px;
+  color: #fff;
+  text-shadow: 2px 2px #333;
+  text-transform: uppercase;
+}
+
+/* Add perspective and 3D rotation to the game board */
+.game-board {
+  display: grid;
+  grid-template-columns: repeat(3, 100px);
+  grid-gap: 10px;
+  justify-content: center;
+  margin: 20px 0;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.2); 
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  transform: perspective(600px) rotateX(10deg) rotateY(-10deg); 
+  transition: transform 0.3s ease; 
+}
+
+.game-board:hover {
+  transform: perspective(600px) rotateX(0deg) rotateY(0deg); 
+}
+
+
+.cell {
+  width: 100px;
+  height: 100px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 2px solid #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3rem;
+  color: #333;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+  border-radius: 5px;
+}
+
+.cell:hover {
+  background-color: rgba(221, 221, 221, 0.9);
+  transform: scale(1.05);
+}
+
+
+#message {
+  margin: 20px;
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #ffeb3b;
+  min-height: 40px;
+  text-shadow: 1px 1px #333;
+}
+
+/* Style the restart button */
+#reset {
+  margin-top: 20px;
+  padding: 15px 30px;
+  font-size: 1.2rem;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+#reset:hover {
+  background-color: rgba(233, 30, 99, 1);
+  transform: scale(1.05);
+}

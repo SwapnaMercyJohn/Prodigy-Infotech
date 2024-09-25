@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Weather App</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Full screen body */
+        body {
+            font-family: 'Arial', sans-serif;
+            height: 100vh;
+            margin: 0;
+            background: url('blu.jpg') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+
+        /* Header styling */
+        header {
+            width: 100%;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            text-align: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 100;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        header h1 {
+            font-size: 36px;
+            margin: 0;
+            color: #1184f7;
+        }
+
+        
+        #weather-container {
+            background-color: rgba(0, 0, 0, 0.6); 
+            padding: 50px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 800px;
+            margin-top: 80px; 
+            height: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #weather-container h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        /* Inputs and buttons */
+        input, button {
+            padding: 15px;
+            font-size: 18px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: none;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        button {
+            background-color: #313941; 
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #4682b4; 
+        }
+
+        .weather-data {
+            margin-top: 30px;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        
+        .weather-info {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 15px 0;
+        }
+
+        
+        .weather-info img {
+            width: 50px;
+            height: 50px;
+        }
+
+        .weather-info span {
+            font-size: 20px;
+        }
+.des{
+    text-align: center;
+}
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            #weather-container {
+                padding: 30px;
+                margin-top: 60px;
+            }
+
+            #weather-container h2 {
+                font-size: 24px;
+            }
+
+            .weather-info span {
+                font-size: 18px;
+            }
+
+            .weather-info img {
+                width: 40px;
+                height: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <h1>Weather App</h1>
+    </header>
+
+    <!-- Weather container -->
+    <div id="weather-container">
+        <h2>Check Your Weather</h2>
+        <input type="text" id="location-input" placeholder="Enter city name">
+        <button onclick="fetchWeatherByInput()">Get Weather</button>
+        <button onclick="fetchWeatherByGeolocation()">Use My Location</button>
+
+        <div class="weather-data" id="weather-data"></div>
+    </div>
+
+    <script>
+        const apiKey = 'cd2c19425392166c9bb080db11a8c80a';
+
+        // Function to fetch weather data by city input
+        function fetchWeatherByInput() {
+            const location = document.getElementById('location-input').value;
+            if (location) {
+                fetchWeatherData(`https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${apiKey}&units=metric`);
+            } else {
+                alert('Please enter a city name');
+            }
+        }
+
+        // Function to fetch weather using geolocation
+        function fetchWeatherByGeolocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(position => {
+                    const lat = position.coords.latitude;
+                    const lon = position.coords.longitude;
+                    fetchWeatherData(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`);
+                }, () => {
+                    alert('Geolocation not available or permission denied.');
+                });
+            } else {
+                alert('Geolocation is not supported by this browser.');
+            }
+        }
+
+        // Function to fetch and display weather data
+        function fetchWeatherData(apiUrl) {
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    const weatherDataContainer = document.getElementById('weather-data');
+                    if (data.cod === 200) {
+                        const temperature = data.main.temp;
+                        const description = data.weather[0].description;
+                        const humidity = data.main.humidity;
+                        const windSpeed = data.wind.speed;
+                        const weatherIcon = `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
+
+                        // Clear previous data
+                        weatherDataContainer.innerHTML = `
+                            <h3>Weather in ${data.name}</h3>
+                            <div class="weather-info">
+                                <span><img src="${weatherIcon}" alt="weather icon"></span>
+                                <span><strong>${temperature} °C</strong></span>
+                            </div>
+                            <div class="weather-info">
+                                <img src="humidity-icon.png" alt="Humidity icon">
+                                <span><strong>Humidity:</strong> ${humidity}%</span>
+                            </div>
+                            <div class="weather-info">
+                                <img src="windspeed.png" alt="Wind speed icon">
+                                <span><strong>Wind Speed:</strong> ${windSpeed} m/s</span>
+                            </div>
+                            <p class="des">${description}</p>
+                        `;
+                    } else {
+                        weatherDataContainer.innerHTML = `<p>${data.message}</p>`;
+                    }
+                })
+                .catch(error => {
+                    alert('Unable to fetch weather data. Please try again.');
+                    console.error('Error fetching data:', error);
+                });
+        }
+    </script>
+
+</body>
+</html>
